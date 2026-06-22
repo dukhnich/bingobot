@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "chgk": {
+      "command": "node",
+      "args": ["/home/dm/Documents/wb/bingo-bot/build/index.js"]
+    }
+  }
+}
