@@ -21,7 +21,8 @@ in **Claude Code** and run `/mcp` — approve the `chgk` server. Tools/prompts t
 To poke at it directly with the MCP Inspector:
 
 ```bash
-npm run inspector   # npx @modelcontextprotocol/inspector node build/index.js
+npm run inspector        # UI at http://localhost:6274 (proxy :6277)
+npm run inspector:stop   # kill the Inspector by port (leaves Claude Code's server alone)
 ```
 
 ## What it exposes
