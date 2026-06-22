@@ -14,12 +14,25 @@ export interface Person {
   name: string;
 }
 
+/**
+ * A bracketed editorial instruction, e.g. `[Ведущему: прочитайте с обычной скоростью]`.
+ * These are NOT discarded: they can carry mechanics essential to the question (a special
+ * reader behavior that is itself the trick) and are valuable craft signal for analysis.
+ */
+export interface EditorialNote {
+  /** e.g. "Для базы", "Ведущему", "Чтецу". */
+  kind: string;
+  text: string;
+}
+
 export interface Question {
   id: number;
   number: number;
-  /** Question text with editorial `[Для базы: …]` / `[Ведущему: …]` notes stripped. */
+  /** Player-facing question prose, with editorial `[Kind: …]` notes lifted out. */
   question: string;
-  /** Original text incl. editorial notes, in case the caller wants it. */
+  /** Editorial instructions lifted from the text (preserved — may be part of the trick). */
+  editorialNotes: EditorialNote[];
+  /** Original text incl. the editorial notes inline, in case the caller wants it. */
   rawQuestion: string;
   handout?: string;
   handoutImage?: string;
@@ -43,9 +56,27 @@ export interface Question {
   url: string;
 }
 
-/** Bracketed editorial instructions that aren't part of the question itself. */
+/**
+ * Bracketed editorial instructions: `[Kind: text]`. A trailing colon is REQUIRED so we
+ * don't swallow in-text glosses like `[Бэст подружка точка ру]` (pronunciations etc.),
+ * which carry no "Kind:" label and are part of the question prose.
+ */
 const EDITORIAL =
-  /\[\s*(?:Для базы|Ведущему|Ведущей|Чтецу|Чтице|Раздатка|Замечание|Внимание)[\s\S]*?\]\s*/g;
+  /\[\s*(Для базы|Ведущему|Ведущей|Чтецу|Чтице|Раздатка|Замечание|Внимание)[^:\]]*:\s*([\s\S]*?)\]/g;
+
+/** Lift editorial notes out of the text, returning clean prose + the notes. */
+function extractEditorial(text: string): { clean: string; notes: EditorialNote[] } {
+  const notes: EditorialNote[] = [];
+  const clean = text
+    .replace(EDITORIAL, (_m, kind: string, body: string) => {
+      notes.push({ kind: kind.trim(), text: body.trim() });
+      return "";
+    })
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+  return { clean, notes };
+}
 
 const str = (v: unknown): string => (typeof v === "string" ? v : "");
 const undefIfEmpty = (s: string): string | undefined => (s.trim() ? s : undefined);
@@ -77,12 +108,13 @@ function tournamentTypes(v: unknown): string[] {
 export function normalizeQuestion(raw: RawQuestion): Question {
   const id = Number(raw.id);
   const rawText = str(raw.text);
-  const question = rawText.replace(EDITORIAL, "").trim();
+  const { clean, notes } = extractEditorial(rawText);
   const tour = raw.tour as Record<string, unknown> | undefined;
   return {
     id,
     number: Number(raw.number) || 0,
-    question: question || rawText,
+    question: clean || rawText,
+    editorialNotes: notes,
     rawQuestion: rawText,
     handout: undefIfEmpty(str(raw.razdatkaText)),
     handoutImage: absoluteImg(raw.razdatkaPic),
@@ -117,6 +149,7 @@ export function formatQuestion(q: Question): string {
   const lines: string[] = [];
   const head = q.number ? `Вопрос ${q.number}` : "Вопрос";
   lines.push(`**${head}** (id ${q.id})`);
+  for (const n of q.editorialNotes) lines.push(`_[${n.kind}: ${n.text}]_`);
   if (q.handout) lines.push(`_Раздатка:_ ${q.handout}`);
   if (q.handoutImage) lines.push(`_Раздатка (картинка):_ ${q.handoutImage}`);
   lines.push("", q.question, "");
