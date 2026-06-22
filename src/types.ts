@@ -176,3 +176,17 @@ export function formatQuestionLine(q: Question): string {
   const pack = q.pack?.title ? ` — _${q.pack.title}_` : "";
   return `• [${q.id}] ${snippet}${snippet.length >= 100 ? "…" : ""}${pack}`;
 }
+
+/**
+ * Compact multi-field block for search results — enough to skim or profile (answer,
+ * authors, complexity, pack) without a follow-up get_question per hit, but far shorter
+ * than the full formatQuestion (omits comment/source/editorial notes).
+ */
+export function formatQuestionBrief(q: Question): string {
+  const snippet = q.question.replace(/\s+/g, " ").slice(0, 160);
+  const meta: string[] = [`Ответ: ${q.answer}`];
+  if (q.authors.length) meta.push(`Авторы: ${names(q.authors)}`);
+  if (q.complexity.length) meta.push(`Сложность: ${q.complexity.join(", ")}`);
+  if (q.pack?.title) meta.push(`Пак: ${q.pack.title}`);
+  return `**[${q.id}]** ${snippet}${snippet.length >= 160 ? "…" : ""}\n${meta.join(" · ")}\n${q.url}`;
+}
