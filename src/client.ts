@@ -30,6 +30,9 @@ export interface SearchOptions {
   /** Complexity range 0..100 (maps to fromD/toD; sets uD=false so the range applies). */
   minComplexity?: number;
   maxComplexity?: number;
+  /** "True" difficulty index range 0..10 (maps to fromTrueDL/toTrueDL; sets uDL=false). */
+  minTrueDL?: number;
+  maxTrueDL?: number;
   /** Date-played range, "YYYY-MM-DD" (maps to startPlayed/endPlayed). */
   playedFrom?: string;
   playedTo?: string;
@@ -78,6 +81,11 @@ function buildSearchParams(query: string, opts: SearchOptions): URLSearchParams 
     qp.set("fromD", String(opts.minComplexity ?? 0));
     qp.set("toD", String(opts.maxComplexity ?? 100));
     qp.set("uD", "false"); // exclude questions with no complexity so the range is meaningful
+  }
+  if (opts.minTrueDL !== undefined || opts.maxTrueDL !== undefined) {
+    qp.set("fromTrueDL", String(opts.minTrueDL ?? 0));
+    qp.set("toTrueDL", String(opts.maxTrueDL ?? 10));
+    qp.set("uDL", "false");
   }
   if (opts.playedFrom) qp.set("startPlayed", opts.playedFrom);
   if (opts.playedTo) qp.set("endPlayed", opts.playedTo);
