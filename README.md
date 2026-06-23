@@ -36,8 +36,9 @@ npm run inspector:stop   # kill the Inspector by port (leaves Claude Code's serv
 
 **Resources** (app/user-read)
 - `gotquestions://question/{id}`, `gotquestions://pack/{id}` — a question / a whole pack.
-- `gotquestions://methodology` — Юрий Вашкулат's question-writing handbook (bundled text),
-  used as the rubric for craft/style analysis.
+- `gotquestions://methodology` — index (TOC + 1-line gloss per приём) of Юрий Вашкулат's
+  question-writing handbook; `gotquestions://methodology/{slug}` — one section in full.
+  The handbook (~110k tokens) is parsed into sections so the rubric can be read selectively.
 
 **Prompts** (slash commands)
 - `analyze_topic` — relevance-filter homonyms, cluster questions by recurring motif/fact.
@@ -50,7 +51,7 @@ npm run inspector:stop   # kill the Inspector by port (leaves Claude Code's serv
 ```
 index.ts        MCP server: registers tools + resources + prompts over stdio
   tools.ts      search_questions, get_question
-  resources.ts  question/{id}, pack/{id}, methodology
+  resources.ts  question/{id}, pack/{id}, methodology[/{slug}] (handbook split into sections)
   prompts.ts    analyze_topic, group_by_author, make_quiz, profile_source
   client.ts     typed accessors (getQuestion / search / getPack)
   flight.ts     fetch gotquestions.online + decode Next.js RSC payloads  <- the tricky bit
