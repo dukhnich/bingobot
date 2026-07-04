@@ -50,6 +50,8 @@ export interface Question {
   pack?: { id: number; title: string };
   /** Distinct tournament types (typeoft.title), e.g. ["Синхрон"]. */
   tournamentTypes: string[];
+  /** Date played, "YYYY-MM-DD" (from the tournament endDate). */
+  playedAt?: string;
   /** Per-tournament complexity ratings (0..100), often empty. */
   complexity: number[];
   tags: string[];
@@ -134,6 +136,7 @@ export function normalizeQuestion(raw: RawQuestion): Question {
         ? { id: raw.packId, title: str(raw.packTitle) }
         : undefined,
     tournamentTypes: tournamentTypes(raw.tournaments),
+    playedAt: undefIfEmpty(str(raw.endDate).slice(0, 10)),
     complexity: Array.isArray(raw.complexity)
       ? (raw.complexity.filter((n) => typeof n === "number") as number[])
       : [],
@@ -162,7 +165,8 @@ export function formatQuestion(q: Question): string {
   const meta: string[] = [];
   if (q.authors.length) meta.push(`Автор(ы): ${names(q.authors)}`);
   if (q.editors.length) meta.push(`Редактор(ы): ${names(q.editors)}`);
-  if (q.pack?.title) meta.push(`Пак: ${q.pack.title}`);
+  if (q.pack) meta.push(`Пак: [${q.pack.id}] ${q.pack.title}`);
+  if (q.playedAt) meta.push(`Сыграно: ${q.playedAt}`);
   if (q.complexity.length) meta.push(`Сложность: ${q.complexity.join(", ")}`);
   if (q.tournamentTypes.length) meta.push(`Тип: ${q.tournamentTypes.join(", ")}`);
   if (meta.length) lines.push("", meta.join(" · "));
@@ -187,6 +191,8 @@ export function formatQuestionBrief(q: Question): string {
   const meta: string[] = [`Ответ: ${q.answer}`];
   if (q.authors.length) meta.push(`Авторы: ${names(q.authors)}`);
   if (q.complexity.length) meta.push(`Сложность: ${q.complexity.join(", ")}`);
-  if (q.pack?.title) meta.push(`Пак: ${q.pack.title}`);
+  if (q.pack) meta.push(`Пак: [${q.pack.id}] ${q.pack.title}`);
+  if (q.playedAt) meta.push(`Сыграно: ${q.playedAt}`);
+  if (q.tournamentTypes.length) meta.push(`Тип: ${q.tournamentTypes.join(", ")}`);
   return `**[${q.id}]** ${snippet}${snippet.length >= 160 ? "…" : ""}\n${meta.join(" · ")}\n${q.url}`;
 }
