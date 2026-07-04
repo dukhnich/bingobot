@@ -18,3 +18,19 @@
 {"type":"scan","pack_id":4897,"status":"ok","wave":"re-pilot","ts":"2026-07-04T19:43:28.294Z"}
 {"type":"rescan","pack_id":5906,"status":"ok","wave":"re-pilot","file":"pack-5906-b.jsonl","ts":"2026-07-04T19:43:28.294Z"}
 {"type":"calibration","n":117,"card_rate":0.034,"unknown_rate":0,"agreement":{"5906":0.33},"decision":"PROCEED to wide wave: card rate healthy, card quality high after tightening (concrete operations, section-checked why_not_known), runs agree on recurring mechanisms; Jaccard noise on 2-card sets documented as gate caveat in SKILL.md","ts":"2026-07-04T19:43:28.294Z"}
+{"type":"scan","pack_id":1202,"status":"ok","wave":"wide","ts":"2026-07-04T19:51:21.139Z"}
+{"type":"scan","pack_id":1673,"status":"ok","wave":"wide","ts":"2026-07-04T19:51:21.139Z"}
+{"type":"scan","pack_id":1674,"status":"ok","wave":"wide","ts":"2026-07-04T19:51:21.139Z"}
+{"type":"scan","pack_id":1518,"status":"ok","wave":"wide","ts":"2026-07-04T19:51:21.139Z"}
+{"type":"scan","pack_id":1545,"status":"ok","wave":"wide","ts":"2026-07-04T19:56:15.546Z"}
+{"type":"scan","pack_id":1803,"status":"ok","wave":"wide","ts":"2026-07-04T19:56:15.546Z"}
+{"type":"scan","pack_id":1785,"status":"ok","wave":"wide","ts":"2026-07-04T19:56:15.546Z"}
+{"type":"scan","pack_id":1375,"status":"ok","wave":"wide","ts":"2026-07-04T19:56:15.546Z"}
+{"type":"scan","pack_id":1228,"status":"ok","wave":"wide","ts":"2026-07-04T20:01:24.444Z"}
+{"type":"scan","pack_id":1281,"status":"ok","wave":"wide","ts":"2026-07-04T20:01:24.444Z"}
+{"type":"scan","pack_id":1395,"status":"ok","wave":"wide","ts":"2026-07-04T20:01:24.444Z"}
+{"type":"scan","pack_id":1542,"status":"ok","wave":"wide","ts":"2026-07-04T20:01:24.444Z"}
+{"type":"scan","pack_id":1276,"status":"ok","wave":"wide","ts":"2026-07-04T20:08:32.494Z"}
+{"type":"scan","pack_id":1277,"status":"ok","wave":"wide","ts":"2026-07-04T20:08:32.494Z"}
+{"type":"scan","pack_id":980,"status":"ok","wave":"wide","ts":"2026-07-04T20:08:32.494Z"}
+{"type":"scan","pack_id":1071,"status":"ok","wave":"wide","ts":"2026-07-04T20:08:32.494Z"}
