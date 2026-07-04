@@ -82,7 +82,7 @@ function gloss(bodyLines: string[]): string {
 }
 
 let parsedCache: { sections: Section[]; bySlug: Map<string, Section> } | null = null;
-function methodologySections(): { sections: Section[]; bySlug: Map<string, Section> } {
+export function methodologySections(): { sections: Section[]; bySlug: Map<string, Section> } {
   if (parsedCache) return parsedCache;
   const lines = methodologyRaw().split("\n");
   const part1 = "Часть 1. Стандартные ходы и приемы";
@@ -195,7 +195,7 @@ const GLOSSES: Record<string, string> = {
   "hrestomatiynaya-klassika": "Хрестоматийные сюжеты и тексты, всплывающие в вопросах снова и снова.",
 };
 
-function methodologyIndex(): string {
+export function methodologyIndex(): string {
   const { sections } = methodologySections();
   if (!sections.length) return methodologyRaw(); // parse failed → fall back to raw text
   const out: string[] = [
