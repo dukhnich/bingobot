@@ -13,3 +13,8 @@
 {"type":"rescan","pack_id":6213,"status":"ok","wave":"pilot","file":"pack-6213-b.jsonl","ts":"2026-07-04T17:14:12.359Z"}
 {"type":"rescan","pack_id":5080,"status":"ok","wave":"pilot","file":"pack-5080-b.jsonl","ts":"2026-07-04T17:14:12.359Z"}
 {"type":"calibration","n":595,"card_rate":0.04,"unknown_rate":0.0017,"agreement":{"5080":0.5,"6213":0.2},"decision":"tighten RUBRIC_DISCIPLINE (mandatory full-section check per card, nameable operation required), re-pilot 3 packs","ts":"2026-07-04T17:14:12.359Z"}
+{"type":"scan","pack_id":5906,"status":"ok","wave":"re-pilot","ts":"2026-07-04T19:43:28.294Z"}
+{"type":"scan","pack_id":679,"status":"ok","wave":"re-pilot","ts":"2026-07-04T19:43:28.294Z"}
+{"type":"scan","pack_id":4897,"status":"ok","wave":"re-pilot","ts":"2026-07-04T19:43:28.294Z"}
+{"type":"rescan","pack_id":5906,"status":"ok","wave":"re-pilot","file":"pack-5906-b.jsonl","ts":"2026-07-04T19:43:28.294Z"}
+{"type":"calibration","n":117,"card_rate":0.034,"unknown_rate":0,"agreement":{"5906":0.33},"decision":"PROCEED to wide wave: card rate healthy, card quality high after tightening (concrete operations, section-checked why_not_known), runs agree on recurring mechanisms; Jaccard noise on 2-card sets documented as gate caveat in SKILL.md","ts":"2026-07-04T19:43:28.294Z"}

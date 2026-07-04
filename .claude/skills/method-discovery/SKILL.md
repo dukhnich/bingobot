@@ -77,6 +77,12 @@ Compute over all pilot pack_summary lines (jq/node one-liners):
   если подтип узнаваем»), re-pilot 3 packs.
 - **Agreement**: for the 2 double-scanned packs, ≥60% of flagged question ids should
   coincide between the two runs. Below that — the rubric is ambiguous; tighten wording.
+  CAVEAT (learned in the 2026-07 pilot): with healthy card rates a pack yields only
+  1–5 cards, so Jaccard agreement is extremely noisy — one borderline singleton swings
+  it by 30+ points. Judge the gate on (a) card QUALITY (concrete operation named,
+  why_not_known citing the checked full section) and (b) whether the runs agree on
+  mechanisms that RECUR across packs; borderline singleton disagreements are filtered
+  by the ≥5-examples threshold in clustering and must not block the wide wave.
 Record the decision:
 {"type":"calibration","card_rate":0.07,"unknown_rate":0.02,"agreement":0.7,"decision":"proceed","ts":"…"}
 
