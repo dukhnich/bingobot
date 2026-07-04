@@ -1,0 +1,15 @@
+{"type":"scan","pack_id":6213,"status":"ok","wave":"pilot","ts":"2026-07-04T16:57:43.319Z"}
+{"type":"scan","pack_id":1380,"status":"ok","wave":"pilot","ts":"2026-07-04T16:57:43.319Z"}
+{"type":"scan","pack_id":1256,"status":"ok","wave":"pilot","ts":"2026-07-04T16:57:43.319Z"}
+{"type":"scan","pack_id":1116,"status":"ok","wave":"pilot","ts":"2026-07-04T16:57:43.319Z"}
+{"type":"scan","pack_id":431,"status":"ok","wave":"pilot","ts":"2026-07-04T16:57:43.319Z"}
+{"type":"scan","pack_id":5080,"status":"ok","wave":"pilot","ts":"2026-07-04T17:06:17.245Z"}
+{"type":"scan","pack_id":266,"status":"ok","wave":"pilot","ts":"2026-07-04T17:06:17.245Z"}
+{"type":"scan","pack_id":6220,"status":"ok","wave":"pilot","ts":"2026-07-04T17:06:17.245Z"}
+{"type":"scan","pack_id":5007,"status":"ok","wave":"pilot","ts":"2026-07-04T17:06:17.245Z"}
+{"type":"scan","pack_id":6327,"status":"ok","wave":"pilot","ts":"2026-07-04T17:14:12.359Z"}
+{"type":"scan","pack_id":5917,"status":"ok","wave":"pilot","ts":"2026-07-04T17:14:12.359Z"}
+{"type":"scan","pack_id":6408,"status":"ok","wave":"pilot","ts":"2026-07-04T17:14:12.359Z"}
+{"type":"rescan","pack_id":6213,"status":"ok","wave":"pilot","file":"pack-6213-b.jsonl","ts":"2026-07-04T17:14:12.359Z"}
+{"type":"rescan","pack_id":5080,"status":"ok","wave":"pilot","file":"pack-5080-b.jsonl","ts":"2026-07-04T17:14:12.359Z"}
+{"type":"calibration","n":595,"card_rate":0.04,"unknown_rate":0.0017,"agreement":{"5080":0.5,"6213":0.2},"decision":"tighten RUBRIC_DISCIPLINE (mandatory full-section check per card, nameable operation required), re-pilot 3 packs","ts":"2026-07-04T17:14:12.359Z"}
