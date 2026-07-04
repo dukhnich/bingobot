@@ -39,6 +39,39 @@ const LINKS =
   "например [59923](https://gotquestions.online/question/59923). Тот же URL " +
   "возвращается в выводе search_questions/get_question, можешь брать его оттуда.";
 
+/**
+ * Verdict discipline for method discovery — kept as one block so the pack-scanner agent
+ * (.claude/agents/pack-scanner.md) can reuse the exact same wording.
+ */
+const RUBRIC_DISCIPLINE =
+  "Дисциплина вердиктов: НЕ изобретай новизну. Сомневаешься между known и variant — " +
+  "выбирай known; между variant и unknown — выбирай variant. При сомнении открой полный " +
+  "раздел ближайшего приёма gotquestions://methodology/{slug}, но не более 2–3 разделов " +
+  "на пакет. В типичном пакете ожидается 0–4 карточки unknown; если выходит заметно " +
+  "больше — перепроверь себя: скорее всего, ты описываешь ТЕМУ вопроса, а не механизм " +
+  "взятия.";
+
+/** JSONL card schema for discovery output — mirrored in .claude/agents/pack-scanner.md. */
+const CARD_SCHEMA =
+  "Схема JSONL (одна строка — один JSON-объект, без переносов внутри строки):\n" +
+  "Первая строка всегда pack_summary:\n" +
+  '{"type":"pack_summary","pack_id":6213,"pack_title":"…","played":"2025-02-17",' +
+  '"tournament_types":["Синхрон"],"n_questions":36,' +
+  '"counts":{"known":31,"variant":4,"unknown":1},' +
+  '"known_hist":{"logika-zameny":6,"klyuchevoe-slovo":4},' +
+  '"notes":"1–2 наблюдения о пакете"}\n' +
+  "Дальше по карточке на строку для каждого variant/unknown:\n" +
+  '{"type":"card","pack_id":6213,"question_id":442892,' +
+  '"url":"https://gotquestions.online/question/442892",' +
+  '"verdict":"unknown","closest_known":["logika-zameny"],' +
+  '"proposed_name":"рабочее русское название приёма",' +
+  '"mechanism":"1–3 предложения: как устроен приём, что делает игрок, чтобы взять",' +
+  '"why_not_known":"чем конкретно отличается от ближайших известных приёмов",' +
+  '"evidence":"короткая цитата из вопроса/комментария, где виден механизм",' +
+  '"signals":["раздатка","форма-текста"],"confidence":"medium"}\n' +
+  "Поля: verdict — variant|unknown; closest_known — 0–2 slug из указателя; " +
+  "confidence — low|medium|high; signals — свободные фасетные метки.";
+
 const HIGHLIGHTS =
   "Раздел «Самое интересное»: приведи 5–8 самых неожиданных, нетривиальных или " +
   "контринтуитивных фактов из всей подборки — то, что удивит даже знатока. Каждый " +
@@ -117,6 +150,55 @@ export function registerPrompts(server: McpServer): void {
           `3. Для каждого автора: число вопросов в выборке, их id-примеры, общие темы и ` +
           `особенности стиля. Если список авторов задан — сравни именно их подходы; иначе выдели ` +
           `авторов, которые чаще всего пишут на эту тему, и сравни их подходы.\n\n` +
+          `${LINKS}`,
+      ),
+  );
+
+  server.registerPrompt(
+    "discover_methods",
+    {
+      title: "Поиск неописанных приёмов в пакете",
+      description:
+        "Residue analysis of one pack against the 38 known приёмы of the methodology " +
+        "handbook: classify every question's solving mechanism as known/variant/unknown " +
+        "and emit candidate-method cards for the residue (JSONL if an output path is " +
+        "given, readable markdown otherwise). Building block of the method-discovery " +
+        "pipeline.",
+      argsSchema: {
+        request: z
+          .string()
+          .describe(
+            'Свободный запрос, напр. «пакет 6213» или «проанализируй пак 6213, карточки ' +
+              "в data/investigation/cards/pack-6213.jsonl». Id пакета и (необязательно) " +
+              "путь для JSONL модель извлекает из текста сама.",
+          ),
+      },
+    },
+    ({ request }) =>
+      userMessage(
+        `Найди в пакете приёмы, не описанные в методическом пособии. Запрос: «${request}».\n\n` +
+          `0. Разбери запрос: выдели ID ПАКЕТА (обязателен) и, если указан, ПУТЬ к файлу ` +
+          `для JSONL-карточек. Если id пакета не назван — задай один короткий уточняющий ` +
+          `вопрос; иначе действуй.\n` +
+          `1. Прочитай указатель gotquestions://methodology — все приёмы с однострочными ` +
+          `аннотациями. Это твоя рубрика классификации; полные разделы пока НЕ читай.\n` +
+          `2. Прочитай пакет целиком: gotquestions://pack/{id}.\n` +
+          `3. Для КАЖДОГО вопроса определи основной МЕХАНИЗМ ВЗЯТИЯ — что должен сделать ` +
+          `игрок, чтобы прийти к ответу (а НЕ тему вопроса!) — и вынеси вердикт:\n` +
+          `   - known — механизм чисто укладывается в один из приёмов указателя (только ` +
+          `посчитай, карточка не нужна);\n` +
+          `   - variant — узнаваемое развитие/подтип известного приёма, заслуживающее ` +
+          `упоминания;\n` +
+          `   - unknown — механизм нельзя честно описать словами ни одной аннотации.\n` +
+          `4. ${RUBRIC_DISCIPLINE}\n` +
+          `5. Для каждого variant/unknown составь карточку по схеме ниже: механизм, отличие ` +
+          `от ближайших приёмов, цитата-доказательство, рабочее название.\n` +
+          `6. Вывод:\n` +
+          `   - если путь указан — запиши в файл JSONL (первая строка pack_summary, затем ` +
+          `по карточке на строку) и в ответе приведи только краткую сводку счётчиков;\n` +
+          `   - иначе — сводка по пакету (счётчики known/variant/unknown, гистограмма ` +
+          `известных приёмов, 1–2 наблюдения) и карточки читабельным markdown.\n\n` +
+          `${CARD_SCHEMA}\n\n` +
           `${LINKS}`,
       ),
   );
