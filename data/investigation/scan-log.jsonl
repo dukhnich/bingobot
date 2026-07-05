@@ -74,3 +74,8 @@
 {"type":"scan","pack_id":5183,"status":"ok","wave":"wide","ts":"2026-07-05T12:24:14.425Z"}
 {"type":"scan","pack_id":5346,"status":"ok","wave":"wide","ts":"2026-07-05T12:24:14.425Z"}
 {"type":"scan","pack_id":5665,"status":"ok","wave":"wide","ts":"2026-07-05T12:24:14.425Z"}
+{"type":"scan","pack_id":5682,"status":"ok","wave":"wide","ts":"2026-07-05T12:30:06.602Z"}
+{"type":"scan","pack_id":5572,"status":"ok","wave":"wide","ts":"2026-07-05T12:30:06.602Z"}
+{"type":"scan","pack_id":5478,"status":"ok","wave":"wide","ts":"2026-07-05T12:30:06.602Z"}
+{"type":"scan","pack_id":5433,"status":"ok","wave":"wide","ts":"2026-07-05T12:30:06.602Z"}
+{"type":"calibration","decision":"family «буквенная операция внутри слова» declared SATURATED (40+ cards, 25+ packs, 2015–2023): scanners now count it in known_hist as bukvennaya-operaciya-vnutri-slova, no per-instance cards; card budget redirected to other mechanisms + anti-anchoring self-check added (user-flagged overfocus risk)","ts":"2026-07-05T17:54:58.244Z"}
