@@ -39,3 +39,19 @@
 {"type":"scan","pack_id":1065,"status":"ok","wave":"wide","ts":"2026-07-04T20:14:09.066Z"}
 {"type":"scan","pack_id":1124,"status":"ok","wave":"wide","ts":"2026-07-04T20:14:09.066Z"}
 {"type":"calibration","decision":"canonical family «буквенная операция внутри слова» added to scanner rubric (prompts.ts KNOWN_FAMILIES + pack-scanner.md): fixes name/signals for clustering, draws explicit boundary vs logika-zameny (announced placeholders, marked omissions, anagrams excluded) — precision aid after 10+ independent cards; also 3 scans failed on session limit, relaunching","ts":"2026-07-05T07:08:42.942Z"}
+{"type":"scan","pack_id":1130,"status":"ok","wave":"wide","ts":"2026-07-05T07:13:33.360Z"}
+{"type":"scan","pack_id":691,"status":"ok","wave":"wide","ts":"2026-07-05T07:13:33.360Z"}
+{"type":"scan","pack_id":697,"status":"ok","wave":"wide","ts":"2026-07-05T07:13:33.360Z"}
+{"type":"scan","pack_id":873,"status":"ok","wave":"wide","ts":"2026-07-05T07:13:33.360Z"}
+{"type":"scan","pack_id":475,"status":"ok","wave":"wide","ts":"2026-07-05T07:17:36.454Z"}
+{"type":"scan","pack_id":720,"status":"ok","wave":"wide","ts":"2026-07-05T07:17:36.454Z"}
+{"type":"scan","pack_id":862,"status":"ok","wave":"wide","ts":"2026-07-05T07:17:36.454Z"}
+{"type":"scan","pack_id":860,"status":"ok","wave":"wide","ts":"2026-07-05T07:17:36.454Z"}
+{"type":"scan","pack_id":146,"status":"ok","wave":"wide","ts":"2026-07-05T07:21:33.781Z"}
+{"type":"scan","pack_id":254,"status":"ok","wave":"wide","ts":"2026-07-05T07:21:33.781Z"}
+{"type":"scan","pack_id":5776,"status":"ok","wave":"wide","ts":"2026-07-05T07:21:33.781Z"}
+{"type":"scan","pack_id":426,"status":"ok","wave":"wide","ts":"2026-07-05T07:21:33.781Z"}
+{"type":"scan","pack_id":199,"status":"ok","wave":"wide","ts":"2026-07-05T07:32:48.179Z"}
+{"type":"scan","pack_id":5134,"status":"ok","wave":"wide","ts":"2026-07-05T07:32:48.179Z"}
+{"type":"scan","pack_id":206,"status":"ok","wave":"wide","ts":"2026-07-05T07:32:48.179Z"}
+{"type":"scan","pack_id":136,"status":"ok","wave":"wide","ts":"2026-07-05T07:32:48.179Z"}
