@@ -34,3 +34,8 @@
 {"type":"scan","pack_id":1277,"status":"ok","wave":"wide","ts":"2026-07-04T20:08:32.494Z"}
 {"type":"scan","pack_id":980,"status":"ok","wave":"wide","ts":"2026-07-04T20:08:32.494Z"}
 {"type":"scan","pack_id":1071,"status":"ok","wave":"wide","ts":"2026-07-04T20:08:32.494Z"}
+{"type":"scan","pack_id":971,"status":"ok","wave":"wide","ts":"2026-07-04T20:14:09.066Z"}
+{"type":"scan","pack_id":725,"status":"ok","wave":"wide","ts":"2026-07-04T20:14:09.066Z"}
+{"type":"scan","pack_id":1065,"status":"ok","wave":"wide","ts":"2026-07-04T20:14:09.066Z"}
+{"type":"scan","pack_id":1124,"status":"ok","wave":"wide","ts":"2026-07-04T20:14:09.066Z"}
+{"type":"calibration","decision":"canonical family «буквенная операция внутри слова» added to scanner rubric (prompts.ts KNOWN_FAMILIES + pack-scanner.md): fixes name/signals for clustering, draws explicit boundary vs logika-zameny (announced placeholders, marked omissions, anagrams excluded) — precision aid after 10+ independent cards; also 3 scans failed on session limit, relaunching","ts":"2026-07-05T07:08:42.942Z"}
