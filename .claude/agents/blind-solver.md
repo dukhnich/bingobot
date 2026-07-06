@@ -5,6 +5,10 @@ description: >
   (never the answer) and solves it in staged phases — first bare, then with Подсказка 1,
   then with Подсказка 2, each hint arriving in a follow-up message. Reports versions per
   phase and flags if a hint hands over the answer without engaging the question.
+  Deliberately runs on a weaker model than the annotator: it approximates the training
+  audience, so the phase-to-phase delta stays measurable (an opus-strength solver takes
+  almost everything in phase A and the leading-test degenerates to a leak-check).
+model: sonnet
 tools: Read
 ---
 
