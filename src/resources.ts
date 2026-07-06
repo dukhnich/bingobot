@@ -23,6 +23,7 @@ import { normalizeQuestion, formatQuestion } from "./types.js";
 // data/ sits next to build/ at the project root; this file runs from build/.
 const HERE = dirname(fileURLToPath(import.meta.url));
 const METHODOLOGY_PATH = join(HERE, "..", "data", "methodology.txt");
+const EXTENSION_PATH = join(HERE, "..", "data", "methodology-extension.md");
 
 let rawCache: string | null = null;
 function methodologyRaw(): string {
@@ -79,6 +80,41 @@ function gloss(bodyLines: string[]): string {
     }
   }
   return "";
+}
+
+/**
+ * Sections of the methodology EXTENSION (data/methodology-extension.md, «Часть 4» —
+ * the output of the method-discovery pipeline). Unlike the PDF-extracted handbook,
+ * the extension follows an explicit format contract, so parsing is trivial:
+ *   line 1:            `# <part title>`
+ *   each section:      `## <title>` followed by `> <one-line gloss>` blockquote lines.
+ * Missing file → no extension sections (the server works without it).
+ */
+function extensionSections(): Section[] {
+  let raw: string;
+  try {
+    raw = readFileSync(EXTENSION_PATH, "utf8");
+  } catch {
+    return [];
+  }
+  const part = /^#\s+(.+)$/m.exec(raw)?.[1].trim() ?? "Часть 4. Новые приёмы";
+  return raw.split(/^## /m).slice(1).map((chunk) => {
+    const lines = chunk.split("\n");
+    const title = lines[0].trim();
+    const gloss: string[] = [];
+    for (const l of lines.slice(1)) {
+      const t = l.trim();
+      if (t.startsWith(">")) gloss.push(t.replace(/^>\s?/, ""));
+      else if (t || gloss.length) break;
+    }
+    return {
+      slug: slugify(title),
+      title,
+      part,
+      gloss: gloss.join(" "),
+      text: "## " + chunk.trimEnd(),
+    };
+  });
 }
 
 let parsedCache: { sections: Section[]; bySlug: Map<string, Section> } | null = null;
@@ -141,6 +177,13 @@ export function methodologySections(): { sections: Section[]; bySlug: Map<string
       gloss: gloss(slice.slice(1)),
       text: slice.join("\n"),
     });
+  }
+
+  // Append the discovery-pipeline extension («Часть 4»), skipping slug collisions
+  // with the original handbook so an extension can never shadow a canonical раздел.
+  const taken = new Set(sections.map((s) => s.slug));
+  for (const ext of extensionSections()) {
+    if (!taken.has(ext.slug)) sections.push(ext);
   }
 
   const bySlug = new Map(sections.map((s) => [s.slug, s]));
