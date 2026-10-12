@@ -2,7 +2,7 @@
   "mcpServers": {
     "chgk": {
       "command": "node",
-      "args": ["/home/dm/Documents/wb/bingo-bot/build/index.js"]
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/build/index.js"]
     }
   }
 }

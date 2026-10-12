@@ -81,7 +81,7 @@ index.ts        MCP server: registers tools + resources + prompts over stdio
   flight.ts     fetch gotquestions.online + decode Next.js RSC payloads  <- the tricky bit
   types.ts      Question model + normalize/format
   cli.ts        read-only CLI over the same data (for subagents)
-data/methodology.txt            bundled handbook (extracted from PDF)
+data/methodology.txt            the handbook as text — not committed, extract it locally (see below)
 data/methodology-extension.md   «Часть 4» — methods discovered by the pipeline
 data/investigation/             pipeline artifacts (harvest, cards, clusters, validation)
 ```
@@ -89,7 +89,11 @@ data/investigation/             pipeline artifacts (harvest, cards, clusters, va
 `flight.ts` is the only scraping-fragile file: if gotquestions.online changes its markup,
 fix it there.
 
-## Regenerating the methodology text
+## Getting the methodology text
+
+The handbook is a third-party text, so it is not in the repository (`data/methodology.txt` is git-ignored).
+Without it the server still runs, but the handbook sections are replaced by a placeholder. Extract the text
+from the PDF:
 
 ```bash
 curl -sL 'https://test-edu.tatar.ru/upload/storage/org2233/files/Metodichka-Vashkulat%20(1).pdf' -o method.pdf
